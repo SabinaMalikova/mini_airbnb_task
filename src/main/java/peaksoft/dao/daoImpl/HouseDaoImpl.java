@@ -78,7 +78,11 @@ public class HouseDaoImpl implements HouseDao {
         List<House> houses = new ArrayList<>();
         try{
             entityManager.getTransaction().begin();
-//            entityManager.createQuery("select h from House h  ") ///////////////////////////////////
+            houses = entityManager.createQuery("select h from House h " +
+                            "inner join Address ad on h.id = ad.house.id " +
+                            "inner join Agency ag on ad.id = ag.address.id" +
+                            "         where ag.id = :agencyId ",House.class)
+                    .setParameter("agencyId",agencyId).getResultList();
             entityManager.getTransaction().commit();
         }catch (Exception e){
             System.out.println(e.getMessage());
@@ -86,31 +90,102 @@ public class HouseDaoImpl implements HouseDao {
         finally {
             entityManager.close();
         }
-        return null;
+        return houses;
     }
 
     @Override
     public List<House> getAllHousesByOwnerId(Long ownerId) {
-        return null;
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        List<House>houses = new ArrayList<>();
+        try{
+            entityManager.getTransaction().begin();
+            houses = entityManager.createQuery("select h from House h where h.owner.id = :ownerId",House.class)
+                    .setParameter("ownerId",ownerId).getResultList();
+            entityManager.getTransaction().commit();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        finally {
+            entityManager.close();
+        }
+        return houses;
     }
 
     @Override
     public List<House> getAllHousesBetweenDates(LocalDate checkIn1, LocalDate checkIn2) {
-        return null;
+        List<House>houses = new ArrayList<>();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try{
+            entityManager.getTransaction().begin();
+            houses = entityManager.createQuery("select h from House h inner join RentInfo r on h.rentInfo.id = r.id " +
+                    "where r.checkIn between :checkIn1 and :checkIn2", House.class)
+                    .setParameter("checkIn1",checkIn1)
+                    .setParameter("checkIn2",checkIn2)
+                            .getResultList();
+            entityManager.getTransaction().commit();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        finally {
+            entityManager.close();
+        }
+        return houses;
     }
 
     @Override
     public Optional<House> getHouseById(Long houseId) {
-        return Optional.empty();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        House house = null;
+        try{
+            entityManager.getTransaction().begin();
+            house = entityManager.find(House.class,houseId);
+            entityManager.getTransaction().commit();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        finally {
+            entityManager.close();
+        }
+        return Optional.ofNullable(house);
     }
 
     @Override
-    public String updateHouse(Long houseId) {
-        return null;
+    public String updateHouse(Long houseId,House newHouse) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try{
+            entityManager.getTransaction().begin();
+            entityManager.createQuery("update House h set h.houseType = :houseType, h.price = :price, h.rating = :rating, h.description = :description, h.room = :room, h.furniture = :furniture where h.id = :houseId",House.class)
+                            .setParameter("houseType",newHouse.getHouseType())
+                            .setParameter("price",newHouse.getPrice())
+                            .setParameter("rating",newHouse.getRating())
+                            .setParameter("description",newHouse.getDescription())
+                            .setParameter("room",newHouse.getRoom())
+                            .setParameter("furniture",newHouse.isFurniture())
+                            .setParameter("houseId",houseId).executeUpdate();
+            entityManager.getTransaction().commit();
+            return "successfully updated";
+        }catch (Exception e){
+            return e.getMessage();
+        }
+        finally {
+            entityManager.close();
+        }
     }
 
     @Override
     public String deleteHouse(Long houseId) {
-        return null;
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try{
+            entityManager.getTransaction().begin();
+            House house = entityManager.find(House.class, houseId);
+            entityManager.remove(house);
+            entityManager.getTransaction().commit();
+        }catch (Exception e){
+            return e.getMessage();
+        }
+        finally {
+            entityManager.close();
+        }
+        return "successfully deleted";
     }
 }

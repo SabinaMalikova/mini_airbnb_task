@@ -38,7 +38,7 @@ public interface HouseDao {
 
 
     //update house
-    String updateHouse(Long houseId);
+    String updateHouse(Long houseId,House newHouse);
 
     String deleteHouse(Long houseId);
 
