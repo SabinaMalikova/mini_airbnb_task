@@ -27,7 +27,7 @@ public class HibernateConfig {
             configuration.addAnnotatedClass(Customer.class);
             configuration.addAnnotatedClass(House.class);
             configuration.addAnnotatedClass(Owner.class);
-            configuration.addAnnotatedClass(Rent_Info.class);
+            configuration.addAnnotatedClass(RentInfo.class);
 
             return configuration.buildSessionFactory().unwrap(EntityManagerFactory.class);
         } catch (HibernateException e) {

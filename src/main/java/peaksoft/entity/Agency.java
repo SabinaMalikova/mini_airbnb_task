@@ -26,7 +26,7 @@ public class Agency {
     @ManyToMany(mappedBy = "agencies")
     private List<Owner>owners;
     @OneToMany
-    private List<Rent_Info>rentInfos;
+    private List<RentInfo>rentInfos;
 
 
 

@@ -32,7 +32,7 @@ public class Owner {
     @OneToMany(mappedBy = "owner")
     private List<House>houses;
     @OneToMany(mappedBy = "owner")
-    private List<Rent_Info>rentInfos;
+    private List<RentInfo>rentInfos;
 
 
 

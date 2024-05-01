@@ -5,15 +5,29 @@ import peaksoft.entity.Agency;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public interface AddressDao {
                //RU
+    // getAddressById
+    Optional<Address> getAddressById(Long addressId);
+
+
     //get all address with agency
-    List<Address> getAll();
+    List<Address> getAllAddressWithAgency();
+
+
     //get quantity agencies by city
+    int getCountAgenciesByCity(String city);
+
 
     //get all region with agencies Map<String, List<Agency>> groupByRegion
-    //    Map<String, List<Agency>> getAll
+    Map<String, List<Agency>> getAllRegionWithAgency();
+
+
     //update address
+    String updateAddress(Long addressId);
+
+
 
 }

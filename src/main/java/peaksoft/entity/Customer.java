@@ -31,7 +31,7 @@ public class Customer {
     @Enumerated(EnumType.STRING)
     private FamilyStatus familyStatus;
     @OneToMany(mappedBy = "customer")
-    private List<Rent_Info> rentInfo;
+    private List<RentInfo> rentInfo;
 
 
 
