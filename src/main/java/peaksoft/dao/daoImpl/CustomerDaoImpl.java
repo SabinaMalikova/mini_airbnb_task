@@ -7,6 +7,7 @@ import peaksoft.dao.CustomerDao;
 import peaksoft.entity.Customer;
 import peaksoft.entity.RentInfo;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -114,9 +115,15 @@ public class CustomerDaoImpl implements CustomerDao {     //2
         try{
             entityManager.getTransaction().begin();
             Customer customer = entityManager.find(Customer.class, customerId);
-            entityManager.remove(customer);
-            entityManager.getTransaction().commit();
-            return "successfully deleted";
+            RentInfo rentInfo = entityManager.createQuery("select r from RentInfo r where r.customer.id = :customerId",RentInfo.class)
+                    .setParameter("customerId",customerId).getSingleResult();
+            if (customer.getRentInfo() == null || rentInfo.getCheckOut().isBefore(LocalDate.now())){
+                entityManager.remove(customer);
+                entityManager.getTransaction().commit();
+                return "successfully deleted";
+            } else {
+                return "fail! rent-info is active";
+            }
         }catch (Exception e){
             return e.getMessage();
         }finally {

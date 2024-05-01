@@ -20,7 +20,7 @@ public interface OwnerDao {
 
 
     //delete owner with house if rent_info is null, or rent_info is true and rent_info < date_now
-    String deleteOwnerWithHouseAndRentInfo(Long ownerId);
+    String deleteOwner(Long ownerId);
 
 
     //get owner by agency id
@@ -32,11 +32,9 @@ public interface OwnerDao {
 
 
     //update owner
-    String updateOwner(Long ownerId);
+    String updateOwner(Long ownerId, Owner newOwner);
 
 
-    //delete owner
-    String deleteOwner(Long ownerId);
 
 
 }

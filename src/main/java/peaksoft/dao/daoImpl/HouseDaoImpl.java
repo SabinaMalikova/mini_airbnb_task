@@ -41,9 +41,13 @@ public class HouseDaoImpl implements HouseDao {
         try{
             entityManager.getTransaction().begin();
             House house = entityManager.find(House.class,houseId);
-            entityManager.remove(house);
-            entityManager.getTransaction().commit();
-            return "successfully deleted";
+            if (house.getRentInfo()==null || house.getRentInfo().getCheckOut().isBefore(LocalDate.now())){
+                entityManager.remove(house);
+                entityManager.getTransaction().commit();
+                return "successfully deleted";
+            } else {
+                return "fail! rent-info is active";
+            }
         }catch (Exception e){
             return e.getMessage();
         }
@@ -170,22 +174,5 @@ public class HouseDaoImpl implements HouseDao {
         finally {
             entityManager.close();
         }
-    }
-
-    @Override
-    public String deleteHouse(Long houseId) {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        try{
-            entityManager.getTransaction().begin();
-            House house = entityManager.find(House.class, houseId);
-            entityManager.remove(house);
-            entityManager.getTransaction().commit();
-        }catch (Exception e){
-            return e.getMessage();
-        }
-        finally {
-            entityManager.close();
-        }
-        return "successfully deleted";
     }
 }
