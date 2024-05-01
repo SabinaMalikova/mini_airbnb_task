@@ -26,10 +26,12 @@ public class House {
     private String description;
     private int room;
     private boolean furniture;
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH})
     private Owner owner;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.REMOVE,CascadeType.MERGE,CascadeType.REFRESH})
     private Address address;
+    @OneToOne(cascade = {CascadeType.REMOVE,CascadeType.MERGE,CascadeType.REFRESH})
+    private RentInfo rentInfo;
 
 
 

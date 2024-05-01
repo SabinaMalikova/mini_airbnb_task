@@ -10,11 +10,11 @@ import java.util.Optional;
 public interface HouseDao {
             //CRUD
     //save house with assign to owner
-    String saveHouseWithAssignToOwner(House house);
+    String saveHouseWithAssignToOwner(House house, Long ownerId);
 
 
     //delete house with address, rent_info if rent_info is null, if rent_info is true and checkOut < date_now
-    String deleteHouseWithAddressAndRentInfo(Long HouseId);
+    String deleteHouseWithAddressAndRentInfo(Long houseId);
 
 
     //get all house by region

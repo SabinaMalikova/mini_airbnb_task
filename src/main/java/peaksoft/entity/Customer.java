@@ -30,7 +30,10 @@ public class Customer {
     private String nationality;
     @Enumerated(EnumType.STRING)
     private FamilyStatus familyStatus;
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer",cascade = {CascadeType.MERGE,
+            CascadeType.REFRESH,
+            CascadeType.PERSIST,
+            CascadeType.REMOVE})
     private List<RentInfo> rentInfo;
 
 

@@ -5,6 +5,7 @@ import lombok.*;
 import peaksoft.enums.Gender;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -29,10 +30,18 @@ public class Owner {
 
     @ManyToMany
     private List<Agency>agencies;
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner",cascade = {CascadeType.PERSIST,
+            CascadeType.MERGE,
+            CascadeType.REFRESH,
+            CascadeType.REMOVE})
     private List<House>houses;
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner",cascade = {CascadeType.REMOVE,CascadeType.MERGE,CascadeType.REFRESH})
     private List<RentInfo>rentInfos;
+
+    public void addHouses(House house) {
+        if (this.houses == null) this.houses = new ArrayList<>();
+        this.houses.add(house);
+    }
 
 
 

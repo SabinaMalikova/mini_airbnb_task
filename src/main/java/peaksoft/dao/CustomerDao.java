@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CustomerDao{
-                                           //CRUD
+                                        //CRUD
 
     //save customer
     String saveCustomer(Customer customer);
@@ -30,10 +30,10 @@ public interface CustomerDao{
 
 
     //update customer
-    String updateCustomer(Long customerId);
+    String updateCustomer(Long customerId, Customer newCustomer);
 
 
     //delete customer with rent_info if rent_info is null, or if rent_info is true and rent_info < date_now.
-    String deleteCustomerWithRentInfo(Long customerId);
+    String deleteCustomer(Long customerId);
 
 }

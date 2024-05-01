@@ -14,7 +14,7 @@ public interface AddressDao {
 
 
     //get all address with agency
-    List<Address> getAllAddressWithAgency();
+    Map<Address,Agency> getAllAddressWithAgency();
 
 
     //get quantity agencies by city
@@ -26,7 +26,7 @@ public interface AddressDao {
 
 
     //update address
-    String updateAddress(Long addressId);
+    String updateAddress(Long oldAddressId, Address newAddress);
 
 
 

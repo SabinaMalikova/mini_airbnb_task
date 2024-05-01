@@ -17,15 +17,15 @@ public interface AgencyDao {
 
 
     //get agency by id
-    Optional<Agency> getAgencyById();
+    Optional<Agency> getAgencyById(Long agencyId);
 
 
     //update agency by id
-    String updateAgency();
+    String updateAgency(Long oldAgencyId, Agency newAgency);
 
 
     //delete agency with address and rent_info
-    String deleteAgencyWithAddressAndRentInfo();
+    String deleteAgency(Long agencyId);
 
 
 }
