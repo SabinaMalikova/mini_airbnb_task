@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class HouseDaoImpl implements HouseDao {
-    EntityManagerFactory entityManagerFactory = HibernateConfig.getEntityManagerFactory();
+    private final EntityManagerFactory entityManagerFactory = HibernateConfig.getEntityManagerFactory();
     @Override
     public String saveHouseWithAssignToOwner(House house, Long ownerId ) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -36,7 +36,7 @@ public class HouseDaoImpl implements HouseDao {
     }
 
     @Override
-    public String deleteHouseWithAddressAndRentInfo(Long houseId) {
+    public String deleteHouse(Long houseId) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try{
             entityManager.getTransaction().begin();

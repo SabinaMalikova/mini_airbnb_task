@@ -9,7 +9,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+
 
 public class Address {
     @Id
@@ -25,6 +25,19 @@ public class Address {
     @OneToOne
     private House house;
 
+    public Address(String city, String region, String street) {
+        this.city = city;
+        this.region = region;
+        this.street = street;
+    }
 
-
+    @Override
+    public String toString() {
+        return "\n Address{" +
+                "id=" + id +
+                ", city='" + city + '\'' +
+                ", region='" + region + '\'' +
+                ", street='" + street + '\'' +
+                '}';
+    }
 }

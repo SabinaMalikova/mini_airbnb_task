@@ -14,11 +14,11 @@ public interface CustomerDao{
 
 
     //save customer with rent_info
-    String saveCustomerWithRentInfo(Customer customer);
+    String saveCustomerWithRentInfo(Customer customer, RentInfo rentInfo);
 
 
     //assign rent_info to customer with customer id, house id, agency id и check in check out
-    String assignRentInfoToCustomer(Long customerId, Long houseId, Long agencyId, RentInfo rentInfo);
+    String assignRentInfoToCustomer(RentInfo rentInfo, Long customerId, Long houseId, Long agencyId);
 
 
     //get all customers

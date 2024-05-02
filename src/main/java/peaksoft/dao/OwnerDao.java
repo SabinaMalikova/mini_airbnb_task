@@ -1,5 +1,6 @@
 package peaksoft.dao;
 
+import peaksoft.entity.House;
 import peaksoft.entity.Owner;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public interface OwnerDao {
 
 
     //save owner with house if age >=18
-    String saveOwnerWithHouse(Owner owner);
+    String saveOwnerWithHouse(Owner owner, House house);
 
 
     //assign owner to agency

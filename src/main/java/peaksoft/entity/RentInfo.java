@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+
 public class RentInfo {
     @Id
     @GeneratedValue(generator = "rent_info_gen", strategy = GenerationType.SEQUENCE)
@@ -20,7 +20,6 @@ public class RentInfo {
     private LocalDate checkIn;
     private LocalDate checkOut;
 
-
     @ManyToOne
     private Customer customer;
     @ManyToOne
@@ -28,8 +27,20 @@ public class RentInfo {
     @ManyToOne
     private Owner owner;
 
+    public RentInfo(LocalDate checkIn, LocalDate checkOut) {
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
+    }
 
-
-
-
+    @Override
+    public String toString() {
+        return "\nRentInfo{" +
+                "id=" + id +
+                ", checkIn=" + checkIn +
+                ", checkOut=" + checkOut +
+                ", customer=" + customer +
+                ", agency=" + agency +
+                ", owner=" + owner +
+                '}';
+    }
 }

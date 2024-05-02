@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+
 public class Customer {
     @Id
     @GeneratedValue(generator = "customer_gen", strategy = GenerationType.SEQUENCE)
@@ -36,7 +36,27 @@ public class Customer {
             CascadeType.REMOVE})
     private List<RentInfo> rentInfo;
 
+    public Customer(String firstName, String lastName, String email, LocalDate dateOfBirth, Gender gender, String nationality, FamilyStatus familyStatus) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.nationality = nationality;
+        this.familyStatus = familyStatus;
+    }
 
-
-
+    @Override
+    public String toString() {
+        return "\nCustomer{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", gender=" + gender +
+                ", nationality='" + nationality + '\'' +
+                ", familyStatus=" + familyStatus +
+                '}';
+    }
 }

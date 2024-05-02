@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import peaksoft.config.HibernateConfig;
 import peaksoft.dao.AgencyDao;
+import peaksoft.entity.Address;
 import peaksoft.entity.Agency;
 
 import java.util.ArrayList;
@@ -13,11 +14,14 @@ import java.util.Optional;
 public class AgencyDaoImpl implements AgencyDao {
     private final EntityManagerFactory entityManagerFactory = HibernateConfig.getEntityManagerFactory();
     @Override
-    public String saveAgency(Agency agency) {
+    public String saveAgency(Agency agency, Address address) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try{
             entityManager.getTransaction().begin();
+            agency.setAddress(address);
+            address.setAgency(agency);
             entityManager.persist(agency);
+            entityManager.persist(address);
             entityManager.getTransaction().commit();
             return "successfully saved";
         }catch (Exception e){

@@ -5,35 +5,68 @@ import jakarta.persistence.EntityManagerFactory;
 import peaksoft.config.HibernateConfig;
 import peaksoft.dao.OwnerDao;
 import peaksoft.entity.Agency;
+import peaksoft.entity.House;
 import peaksoft.entity.Owner;
 import peaksoft.entity.RentInfo;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class OwnerDaoImpl implements OwnerDao {    //1
-    EntityManagerFactory entityManagerFactory = HibernateConfig.getEntityManagerFactory();
+    private final EntityManagerFactory entityManagerFactory = HibernateConfig.getEntityManagerFactory();
     @Override
     public String saveOwner(Owner owner) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try{
+            Period period = Period.between(owner.getDateOfBirth(), LocalDate.now());
             entityManager.getTransaction().begin();
-            entityManager.persist(owner);
-            entityManager.getTransaction().commit();
+            if (period.getYears() < 0) {
+                return "age can no be negative";
+            }
+            else if(period.getYears() < 18) {
+                entityManager.persist(owner);
+                entityManager.getTransaction().commit();
+                return "successfully saved";
+            }
+            else {
+               return "fail, age < 18";
+            }
         }catch (Exception e){
             return e.getMessage();
         }
         finally {
             entityManager.close();
         }
-        return "successfully saved";
     }
 
     @Override
-    public String saveOwnerWithHouse(Owner owner) {
-        return null;
+    public String saveOwnerWithHouse(Owner owner, House house) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try{
+            entityManager.getTransaction().begin();
+            owner.addHouses(house);
+            house.setOwner(owner);
+            Period period = Period.between(owner.getDateOfBirth(), LocalDate.now());
+            if (period.getYears() < 0) {
+                return "age can no be negative";
+            }
+            else if (period.getYears() < 18){
+                entityManager.persist(owner);
+                entityManager.persist(house);
+                entityManager.getTransaction().commit();
+                return "successfully saved";
+            }
+            else {
+                return "fail, age < 18";
+            }
+        }catch (Exception e){
+            return e.getMessage();
+        }finally {
+            entityManager.close();
+        }
     }
 
     @Override

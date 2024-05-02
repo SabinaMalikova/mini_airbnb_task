@@ -1,5 +1,6 @@
 package peaksoft.dao;
 
+import peaksoft.entity.Address;
 import peaksoft.entity.Agency;
 
 import java.util.List;
@@ -9,7 +10,7 @@ public interface AgencyDao {
              //CRUD
 
     //save agency with address
-    String saveAgency(Agency agency);
+    String saveAgency(Agency agency, Address address);
 
 
     //get all

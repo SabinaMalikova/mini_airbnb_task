@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class CustomerDaoImpl implements CustomerDao {     //2
-    EntityManagerFactory entityManagerFactory = HibernateConfig.getEntityManagerFactory();
+public class CustomerDaoImpl implements CustomerDao {  //1
+    private final EntityManagerFactory entityManagerFactory = HibernateConfig.getEntityManagerFactory();
     @Override
     public String saveCustomer(Customer customer) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -31,13 +31,26 @@ public class CustomerDaoImpl implements CustomerDao {     //2
     }
 
     @Override
-    public String saveCustomerWithRentInfo(Customer customer) {
-
-        return null;
+    public String saveCustomerWithRentInfo(Customer customer , RentInfo rentInfo) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try{
+            entityManager.getTransaction().begin();
+            customer.getRentInfo().add(rentInfo);
+            rentInfo.setCustomer(customer);
+            entityManager.persist(customer);
+            entityManager.persist(rentInfo);
+            entityManager.getTransaction().commit();
+            return "successfully saved";
+        }catch (Exception e){
+            return e.getMessage();
+        }
+        finally {
+            entityManager.close();
+        }
     }
 
     @Override
-    public String assignRentInfoToCustomer(Long customerId, Long houseId, Long agencyId, RentInfo rentInfo) {
+    public String assignRentInfoToCustomer(RentInfo rentInfo, Long customerId, Long houseId, Long agencyId) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try{
             entityManager.getTransaction().begin();

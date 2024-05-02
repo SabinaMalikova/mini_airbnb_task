@@ -14,7 +14,7 @@ public interface HouseDao {
 
 
     //delete house with address, rent_info if rent_info is null, if rent_info is true and checkOut < date_now
-    String deleteHouseWithAddressAndRentInfo(Long houseId);
+    String deleteHouse(Long houseId);
 
 
     //get all house by region

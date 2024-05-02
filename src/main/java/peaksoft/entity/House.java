@@ -13,7 +13,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class House {
     @Id
     @GeneratedValue(generator = "house_gen", strategy = GenerationType.SEQUENCE)
@@ -34,10 +33,37 @@ public class House {
     private RentInfo rentInfo;
 
 
+    public House(HouseType houseType, BigDecimal price, double rating, String description, int room, boolean furniture, Address address) {
+        this.houseType = houseType;
+        this.price = price;
+        this.rating = rating;
+        this.description = description;
+        this.room = room;
+        this.furniture = furniture;
+        this.address = address;
+    }
 
+    public House(HouseType houseType, BigDecimal price, double rating, String description, int room, boolean furniture, Address address, RentInfo rentInfo) {
+        this.houseType = houseType;
+        this.price = price;
+        this.rating = rating;
+        this.description = description;
+        this.room = room;
+        this.furniture = furniture;
+        this.address = address;
+        this.rentInfo = rentInfo;
+    }
 
-
-
-
-
+    @Override
+    public String toString() {
+        return "\nHouse{" +
+                "id=" + id +
+                ", houseType=" + houseType +
+                ", price=" + price +
+                ", rating=" + rating +
+                ", description='" + description + '\'' +
+                ", room=" + room +
+                ", furniture=" + furniture +
+                '}';
+    }
 }

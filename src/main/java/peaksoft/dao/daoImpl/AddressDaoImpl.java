@@ -37,8 +37,11 @@ public class AddressDaoImpl implements AddressDao {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
             entityManager.getTransaction().begin();
-            getAll =  entityManager.createQuery("select a, s from Address s inner join Agency a on s.id = a.id", Map.class)
-                    .getSingleResult();
+            List<Address> addresses = entityManager.createQuery("select s from Address s inner join Agency a on s.id = a.id", Address.class)
+                    .getResultList();
+            for(Address address: addresses){
+                getAll.put(address,address.getAgency());
+            }
             entityManager.getTransaction().commit();
         }catch (Exception e){
             System.out.println(e.getMessage());
@@ -73,8 +76,12 @@ public class AddressDaoImpl implements AddressDao {
         Map <String,List<Agency>> allRegionWithAgency = new HashMap<>();
         try{
             entityManager.getTransaction().begin();
-            allRegionWithAgency = entityManager.createQuery("select ad.region, ag.agency_name from Agency ag inner join Address ad on ag.id = ag.id", Map.class)
-                    .getSingleResult();
+            List<Agency> agencies = entityManager.createQuery("select ag from Agency ag ", Agency.class).getResultList();
+            List<Address> addresses = entityManager.createQuery("select ad from Agency ag inner join Address ad on ag.id = ag.id", Address.class)
+                    .getResultList();
+            for (Address address : addresses){
+                allRegionWithAgency.put(address.getRegion(), agencies);
+            }
             entityManager.getTransaction().commit();
         }catch (Exception e){
             System.out.println(e.getMessage());

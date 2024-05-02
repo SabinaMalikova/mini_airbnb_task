@@ -16,7 +16,7 @@ public class HibernateConfig {
             properties.put(Environment.JAKARTA_JDBC_URL, "jdbc:postgresql://localhost:5432/miniairbnb");
             properties.put(Environment.JAKARTA_JDBC_USER, "postgres");
             properties.put(Environment.JAKARTA_JDBC_PASSWORD, "1234");
-            properties.put(Environment.HBM2DDL_AUTO, "create");
+            properties.put(Environment.HBM2DDL_AUTO, "update");
             properties.put(Environment.DIALECT, "org.hibernate.dialect.PostgreSQLDialect");
             properties.put(Environment.SHOW_SQL, "true");
 

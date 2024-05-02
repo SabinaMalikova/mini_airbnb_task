@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+
 public class Owner {
     @Id
     @GeneratedValue(generator = "owner_gen", strategy = GenerationType.SEQUENCE)
@@ -38,23 +38,28 @@ public class Owner {
     @OneToMany(mappedBy = "owner",cascade = {CascadeType.REMOVE,CascadeType.MERGE,CascadeType.REFRESH})
     private List<RentInfo>rentInfos;
 
+    public Owner(String firstName, String lastName, String email, LocalDate dateOfBirth, Gender gender) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+    }
+
     public void addHouses(House house) {
         if (this.houses == null) this.houses = new ArrayList<>();
         this.houses.add(house);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @Override
+    public String toString() {
+        return "\nOwner{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", gender=" + gender +
+                '}';
+    }
 }
