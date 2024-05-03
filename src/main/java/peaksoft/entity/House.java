@@ -33,14 +33,13 @@ public class House {
     private RentInfo rentInfo;
 
 
-    public House(HouseType houseType, BigDecimal price, double rating, String description, int room, boolean furniture, Address address) {
+    public House(HouseType houseType, BigDecimal price, double rating, String description, int room, boolean furniture) {
         this.houseType = houseType;
         this.price = price;
         this.rating = rating;
         this.description = description;
         this.room = room;
         this.furniture = furniture;
-        this.address = address;
     }
 
     public House(HouseType houseType, BigDecimal price, double rating, String description, int room, boolean furniture, Address address, RentInfo rentInfo) {

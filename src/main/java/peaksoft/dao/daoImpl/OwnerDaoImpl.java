@@ -4,10 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import peaksoft.config.HibernateConfig;
 import peaksoft.dao.OwnerDao;
-import peaksoft.entity.Agency;
-import peaksoft.entity.House;
-import peaksoft.entity.Owner;
-import peaksoft.entity.RentInfo;
+import peaksoft.entity.*;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -98,15 +95,26 @@ public class OwnerDaoImpl implements OwnerDao {    //1
         try{
             entityManager.getTransaction().begin();
             Owner owner = entityManager.find(Owner.class,ownerId);
-            RentInfo rentInfo = entityManager.createQuery("select r from RentInfo r where r.owner.id = :ownerId",RentInfo.class)
-                    .setParameter("ownerId",ownerId).getSingleResult();
-            if (rentInfo == null || rentInfo.getCheckOut().isBefore(LocalDate.now())){
-                entityManager.remove(owner);
-                entityManager.getTransaction().commit();
-                return "successfully deleted";
-            }else {
-                return "fail! rent-info is active";
+            List<RentInfo> rentInfos = owner.getRentInfos();
+            if (rentInfos.isEmpty()){
+                for (RentInfo rentInfo : rentInfos){
+                    if (rentInfo.getCheckOut().isAfter(LocalDate.now())){
+                        return "owner has active rent info";
+                    }
+                    Agency agency = rentInfo.getAgency();
+                    agency.getRentInfos().remove(rentInfo);
+                    Customer customer = rentInfo.getCustomer();
+                    customer.getRentInfo().remove(rentInfo);
+                    entityManager.remove(rentInfo);
+                }
             }
+            List<Agency> agencies = owner.getAgencies();
+            for (Agency agency : agencies){
+                agency.getOwners().remove(owner);
+            }
+            entityManager.remove(owner);
+            entityManager.getTransaction().commit();
+            return "Successfully deleted";
         }catch (Exception e){
             return e.getMessage();
         }finally {

@@ -136,18 +136,18 @@ public class App
                }
                case "18" -> {
                    Owner owner1 = new Owner("Sezim","Nurlanova","sezim@gmail.com",LocalDate.of(2005,3,3),Gender.FEMALE);
-                   House house1 = new House(HouseType.APARTMENT, new BigDecimal(250.00000), 10, "perfecto", 4, true, new Address("Seoul", "Gangnam","dda1"));
+                   House house1 = new House(HouseType.APARTMENT, new BigDecimal(250.00000), 10, "perfecto", 4, true);
                    Owner owner2 = new Owner("Artem","Asanov","artem@gmail.com",LocalDate.of(2002,2,2),Gender.MALE);
-                   House house2 = new House(HouseType.HOUSE, new BigDecimal(550.00000), 9, "perfecto", 18, false,new Address("Seoul", "Gangnam","dda2"));
+                   House house2 = new House(HouseType.HOUSE, new BigDecimal(550.00000), 9, "perfecto", 18, false);
 
                    System.out.println(ownerService.saveOwnerWithHouse(owner1,house1));
                    System.out.println(ownerService.saveOwnerWithHouse(owner2, house2));
                }
                case "19" -> {
-                   System.out.println(ownerService.assignOwnerToAgency(1L, 1L));
+                   System.out.println(ownerService.assignOwnerToAgency(1L, 3L));
                }
                case "20" -> {
-                   System.out.println(ownerService.deleteOwner(2L));
+                   System.out.println(ownerService.deleteOwner(1L));
                }
                case "21" -> {
                    System.out.println(ownerService.getOwnerByAgencyId(1L));
