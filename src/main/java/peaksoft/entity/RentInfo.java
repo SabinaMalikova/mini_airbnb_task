@@ -20,6 +20,8 @@ public class RentInfo {
     private LocalDate checkIn;
     private LocalDate checkOut;
 
+    @OneToOne
+    private House house;
     @ManyToOne
     private Customer customer;
     @ManyToOne

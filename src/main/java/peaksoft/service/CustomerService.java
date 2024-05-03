@@ -3,6 +3,7 @@ package peaksoft.service;
 import peaksoft.entity.Customer;
 import peaksoft.entity.RentInfo;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,7 +15,7 @@ public interface CustomerService {
 
 
     //save customer with rent_info
-    String saveCustomerWithRentInfo(Customer customer, RentInfo rentInfo);
+    String saveCustomerWithRentInfo(Customer customer , Long houseId, Long agencyId, LocalDate checkIn, LocalDate checkOut);
 
 
     //assign rent_info to customer with customer id, house id, agency id и check in check out

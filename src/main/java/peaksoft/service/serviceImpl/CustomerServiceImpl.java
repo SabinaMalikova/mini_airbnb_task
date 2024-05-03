@@ -6,6 +6,7 @@ import peaksoft.entity.Customer;
 import peaksoft.entity.RentInfo;
 import peaksoft.service.CustomerService;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,8 +18,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public String saveCustomerWithRentInfo(Customer customer, RentInfo rentInfo) {
-        return customerDao.saveCustomerWithRentInfo(customer,rentInfo);
+    public String saveCustomerWithRentInfo(Customer customer , Long houseId, Long agencyId, LocalDate checkIn, LocalDate checkOut) {
+        return customerDao.saveCustomerWithRentInfo(customer,houseId, agencyId, checkIn, checkOut);
     }
 
     @Override

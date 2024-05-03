@@ -26,7 +26,7 @@ public class OwnerDaoImpl implements OwnerDao {    //1
             if (period.getYears() < 0) {
                 return "age can no be negative";
             }
-            else if(period.getYears() < 18) {
+            else if(period.getYears() > 18) {
                 entityManager.persist(owner);
                 entityManager.getTransaction().commit();
                 return "successfully saved";
@@ -44,30 +44,34 @@ public class OwnerDaoImpl implements OwnerDao {    //1
 
     @Override
     public String saveOwnerWithHouse(Owner owner, House house) {
+        if (owner == null || house == null) {
+            return "Owner or house cannot be null";
+        }
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        try{
+        try {
             entityManager.getTransaction().begin();
+
             owner.addHouses(house);
             house.setOwner(owner);
-            Period period = Period.between(owner.getDateOfBirth(), LocalDate.now());
+
+            Period period = Period.between(owner.getDateOfBirth(), LocalDate.now());;
             if (period.getYears() < 0) {
-                return "age can no be negative";
-            }
-            else if (period.getYears() < 18){
+                return "Age cannot be negative";
+            } else if (period.getYears() >= 18) {
                 entityManager.persist(owner);
                 entityManager.persist(house);
                 entityManager.getTransaction().commit();
-                return "successfully saved";
+                return "Successfully saved";
+            } else {
+                return "Failed to save: age < 18";
             }
-            else {
-                return "fail, age < 18";
-            }
-        }catch (Exception e){
+        } catch (Exception e) {
             return e.getMessage();
-        }finally {
+        } finally {
             entityManager.close();
         }
     }
+
 
     @Override
     public String assignOwnerToAgency(Long ownerId, Long agencyId) {

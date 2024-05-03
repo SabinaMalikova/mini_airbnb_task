@@ -106,16 +106,16 @@ public class App
                    System.out.println(addressService.updateAddress(3L, address));
                }
                case "11" -> {
-//                   Customer customer1 = new Customer("Anna","Andreeva","anna@gmail.com", LocalDate.of(1999,12,12), Gender.FEMALE,"russian", FamilyStatus.SINGLE);
+                   Customer customer1 = new Customer("Anna","Andreeva","anna@gmail.com", LocalDate.of(1999,12,12), Gender.FEMALE,"russian", FamilyStatus.SINGLE);
                    Customer customer2 = new Customer("Sasha","Shieva","sasha@gmail.com", LocalDate.of(1995,11,11), Gender.FEMALE,"russian", FamilyStatus.MARRIED);
 
-//                   System.out.println(customerService.saveCustomer(customer1));
+                   System.out.println(customerService.saveCustomer(customer1));
                    System.out.println(customerService.saveCustomer(customer2));
                }
                case "12" -> {
                    Customer customer = new Customer("Garry", "Karaev", "garry@gmail.com", LocalDate.of(2000,10,10),Gender.MALE,"german",FamilyStatus.SINGLE);
                    RentInfo rentInfo = new RentInfo(LocalDate.of(2024,1,5), LocalDate.of(2024,1,6));
-                   System.out.println(customerService.saveCustomerWithRentInfo(customer,rentInfo));
+                   System.out.println(customerService.saveCustomerWithRentInfo(customer,1L,3L,LocalDate.of(2023,3,3),LocalDate.now()));
                }
                case "13" -> {
                    System.out.println(customerService.getAllCustomers());
@@ -124,19 +124,19 @@ public class App
                    System.out.println(customerService.getCustomerById(1L));
                }
                case "15" -> {
-                   Customer customer = new Customer("Marina", "Ivanova", "marina@gmail.com",LocalDate.of(2004,5,5),Gender.FEMALE,"ukraine",FamilyStatus.SINGLE);
+                   Customer customer = new Customer("Zarina", "Ivanova", "Zarina@gmail.com",LocalDate.of(2004,5,5),Gender.FEMALE,"ukraine",FamilyStatus.SINGLE);
                    System.out.println(customerService.updateCustomer(1L, customer));
                }
                case "16" -> {
                    System.out.println(customerService.deleteCustomer(1L));
                }
                case "17" -> {
-                   Owner owner = new Owner("Ulan","Karaev","ulan@gmail.com",LocalDate.of(2003,4,4),Gender.MALE);
+                   Owner owner = new Owner("Ulan","Karaev","ulan@gmail.com",LocalDate.of(2002,4,4),Gender.MALE);
                    System.out.println(ownerService.saveOwner(owner));
                }
                case "18" -> {
                    Owner owner1 = new Owner("Sezim","Nurlanova","sezim@gmail.com",LocalDate.of(2005,3,3),Gender.FEMALE);
-                   House house1 = new House(HouseType.APARTMENT, new BigDecimal(250.00000), 10, "perfecto", 4, true,new Address("Seoul", "Gangnam","dda1"));
+                   House house1 = new House(HouseType.APARTMENT, new BigDecimal(250.00000), 10, "perfecto", 4, true, new Address("Seoul", "Gangnam","dda1"));
                    Owner owner2 = new Owner("Artem","Asanov","artem@gmail.com",LocalDate.of(2002,2,2),Gender.MALE);
                    House house2 = new House(HouseType.HOUSE, new BigDecimal(550.00000), 9, "perfecto", 18, false,new Address("Seoul", "Gangnam","dda2"));
 
