@@ -19,12 +19,12 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public String saveOwnerWithHouse(Owner owner, House house) {
-        return ownerDao.saveOwnerWithHouse(owner,house);
+        return ownerDao.saveOwnerWithHouse(owner, house);
     }
 
     @Override
     public String assignOwnerToAgency(Long ownerId, Long agencyId) {
-        return ownerDao.assignOwnerToAgency(ownerId,agencyId);
+        return ownerDao.assignOwnerToAgency(ownerId, agencyId);
     }
 
     @Override
@@ -33,8 +33,8 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public Optional<Owner> getOwnerByAgencyId(Long agencyId) {
-        return ownerDao.getOwnerByAgencyId(agencyId);
+    public List<Owner> getOwnersByAgencyId(Long agencyId) {
+        return ownerDao.getOwnersByAgencyId(agencyId);
     }
 
     @Override
@@ -44,6 +44,6 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public String updateOwner(Long ownerId, Owner newOwner) {
-        return ownerDao.updateOwner(ownerId,newOwner);
+        return ownerDao.updateOwner(ownerId, newOwner);
     }
 }

@@ -135,8 +135,8 @@ public class CustomerDaoImpl implements CustomerDao {  //1
             Customer customer = entityManager.find(Customer.class, customerId);
             List<RentInfo> rentInfos = customer.getRentInfo();
             if (rentInfos.isEmpty()) {
-                for (RentInfo rentInfo : rentInfos){
-                    if (rentInfo.getCheckOut().isAfter(LocalDate.now())){
+                for (RentInfo rentInfo : rentInfos) {
+                    if (rentInfo.getCheckOut().isAfter(LocalDate.now())) {
                         return "customer has active rentInfo ";
                     }
                     House house = rentInfo.getHouse();

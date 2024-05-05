@@ -35,6 +35,6 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public String updateAddress(Long oldAddressId, Address newAddress) {
-        return addressDao.updateAddress(oldAddressId,newAddress);
+        return addressDao.updateAddress(oldAddressId, newAddress);
     }
 }

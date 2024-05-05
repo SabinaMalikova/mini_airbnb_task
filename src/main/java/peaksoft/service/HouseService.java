@@ -21,7 +21,7 @@ public interface HouseService {
 
 
     //get all house by agency id
-    List<House>getAllHouseByAgencyId(Long agencyId);
+    List<House> getAllHouseByAgencyId(Long agencyId);
 
 
     //get all by owner id
@@ -29,7 +29,7 @@ public interface HouseService {
 
 
     //get all houses where checkIn date between 2 dates
-    List<House>getAllHousesBetweenDates(LocalDate checkIn1, LocalDate checkIn2);
+    List<House> getAllHousesBetweenDates(LocalDate checkIn1, LocalDate checkIn2);
 
 
     //get house by id
@@ -37,6 +37,6 @@ public interface HouseService {
 
 
     //update house
-    String updateHouse(Long houseId,House newHouse);
+    String updateHouse(Long houseId, House newHouse);
 
 }

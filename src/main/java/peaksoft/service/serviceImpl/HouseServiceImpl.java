@@ -14,7 +14,7 @@ public class HouseServiceImpl implements HouseService {
 
     @Override
     public String saveHouseWithAssignToOwner(House house, Long ownerId) {
-        return houseDao.saveHouseWithAssignToOwner(house,ownerId);
+        return houseDao.saveHouseWithAssignToOwner(house, ownerId);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class HouseServiceImpl implements HouseService {
 
     @Override
     public List<House> getAllHousesBetweenDates(LocalDate checkIn1, LocalDate checkIn2) {
-        return houseDao.getAllHousesBetweenDates(checkIn1,checkIn2);
+        return houseDao.getAllHousesBetweenDates(checkIn1, checkIn2);
     }
 
     @Override
@@ -49,6 +49,6 @@ public class HouseServiceImpl implements HouseService {
 
     @Override
     public String updateHouse(Long houseId, House newHouse) {
-        return houseDao.updateHouse(houseId,newHouse);
+        return houseDao.updateHouse(houseId, newHouse);
     }
 }

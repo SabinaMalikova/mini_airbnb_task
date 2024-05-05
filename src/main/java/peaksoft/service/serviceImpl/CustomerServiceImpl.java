@@ -12,14 +12,15 @@ import java.util.Optional;
 
 public class CustomerServiceImpl implements CustomerService {
     CustomerDao customerDao = new CustomerDaoImpl();
+
     @Override
     public String saveCustomer(Customer customer) {
         return customerDao.saveCustomer(customer);
     }
 
     @Override
-    public String saveCustomerWithRentInfo(Customer customer , Long houseId, Long agencyId, LocalDate checkIn, LocalDate checkOut) {
-        return customerDao.saveCustomerWithRentInfo(customer,houseId, agencyId, checkIn, checkOut);
+    public String saveCustomerWithRentInfo(Customer customer, Long houseId, Long agencyId, LocalDate checkIn, LocalDate checkOut) {
+        return customerDao.saveCustomerWithRentInfo(customer, houseId, agencyId, checkIn, checkOut);
     }
 
     @Override
@@ -39,7 +40,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public String updateCustomer(Long customerId, Customer newCustomer) {
-        return customerDao.updateCustomer(customerId,newCustomer);
+        return customerDao.updateCustomer(customerId, newCustomer);
     }
 
     @Override

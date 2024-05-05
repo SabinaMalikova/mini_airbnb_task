@@ -18,7 +18,7 @@ public class AgencyServiceImpl implements AgencyService {
 
     @Override
     public String saveAgency(Agency agency, Address address) {
-        return agencyDao.saveAgency(agency,address);
+        return agencyDao.saveAgency(agency, address);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class AgencyServiceImpl implements AgencyService {
 
     @Override
     public String updateAgency(Long oldAgencyId, Agency newAgency) {
-        return agencyDao.updateAgency(oldAgencyId,newAgency);
+        return agencyDao.updateAgency(oldAgencyId, newAgency);
     }
 
     @Override

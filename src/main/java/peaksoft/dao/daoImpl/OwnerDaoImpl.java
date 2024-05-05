@@ -12,29 +12,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class OwnerDaoImpl implements OwnerDao {    //1
+public class OwnerDaoImpl implements OwnerDao {
     private final EntityManagerFactory entityManagerFactory = HibernateConfig.getEntityManagerFactory();
+
     @Override
     public String saveOwner(Owner owner) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        try{
+        try {
             Period period = Period.between(owner.getDateOfBirth(), LocalDate.now());
             entityManager.getTransaction().begin();
             if (period.getYears() < 0) {
                 return "age can no be negative";
-            }
-            else if(period.getYears() > 18) {
+            } else if (period.getYears() > 18) {
                 entityManager.persist(owner);
                 entityManager.getTransaction().commit();
                 return "successfully saved";
+            } else {
+                return "fail, age < 18";
             }
-            else {
-               return "fail, age < 18";
-            }
-        }catch (Exception e){
+        } catch (Exception e) {
             return e.getMessage();
-        }
-        finally {
+        } finally {
             entityManager.close();
         }
     }
@@ -51,7 +49,8 @@ public class OwnerDaoImpl implements OwnerDao {    //1
             owner.addHouses(house);
             house.setOwner(owner);
 
-            Period period = Period.between(owner.getDateOfBirth(), LocalDate.now());;
+            Period period = Period.between(owner.getDateOfBirth(), LocalDate.now());
+            ;
             if (period.getYears() < 0) {
                 return "Age cannot be negative";
             } else if (period.getYears() >= 18) {
@@ -73,18 +72,17 @@ public class OwnerDaoImpl implements OwnerDao {    //1
     @Override
     public String assignOwnerToAgency(Long ownerId, Long agencyId) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        try{
+        try {
             entityManager.getTransaction().begin();
-            Owner owner = entityManager.find(Owner.class,ownerId);
+            Owner owner = entityManager.find(Owner.class, ownerId);
             Agency agency = entityManager.find(Agency.class, agencyId);
             owner.getAgencies().add(agency);
             agency.getOwners().add(owner);
             entityManager.getTransaction().commit();
             return "successfully assigned";
-        }catch (Exception e){
+        } catch (Exception e) {
             return e.getMessage();
-        }
-        finally {
+        } finally {
             entityManager.close();
         }
     }
@@ -92,13 +90,13 @@ public class OwnerDaoImpl implements OwnerDao {    //1
     @Override
     public String deleteOwner(Long ownerId) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        try{
+        try {
             entityManager.getTransaction().begin();
-            Owner owner = entityManager.find(Owner.class,ownerId);
+            Owner owner = entityManager.find(Owner.class, ownerId);
             List<RentInfo> rentInfos = owner.getRentInfos();
-            if (rentInfos.isEmpty()){
-                for (RentInfo rentInfo : rentInfos){
-                    if (rentInfo.getCheckOut().isAfter(LocalDate.now())){
+            if (rentInfos.isEmpty()) {
+                for (RentInfo rentInfo : rentInfos) {
+                    if (rentInfo.getCheckOut().isAfter(LocalDate.now())) {
                         return "owner has active rent info";
                     }
                     Agency agency = rentInfo.getAgency();
@@ -109,50 +107,50 @@ public class OwnerDaoImpl implements OwnerDao {    //1
                 }
             }
             List<Agency> agencies = owner.getAgencies();
-            for (Agency agency : agencies){
+            for (Agency agency : agencies) {
                 agency.getOwners().remove(owner);
             }
             entityManager.remove(owner);
             entityManager.getTransaction().commit();
             return "Successfully deleted";
-        }catch (Exception e){
+        } catch (Exception e) {
             return e.getMessage();
-        }finally {
+        } finally {
             entityManager.close();
         }
     }
 
     @Override
-    public Optional<Owner> getOwnerByAgencyId(Long agencyId) {
+    public List<Owner> getOwnersByAgencyId(Long agencyId) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        Owner owner = null;
-        try{
+        List<Owner> owners = new ArrayList<>();
+        try {
             entityManager.getTransaction().begin();
-            owner = entityManager.createQuery("select o from Owner o inner join Agency ag where ag.id = :agencyId",Owner.class)
-                            .setParameter("agencyId",agencyId).getSingleResult();
+            owners = entityManager.createQuery("select o from Owner o join o.agencies a" +
+                            " where a.id =:agencyId", Owner.class)
+                    .setParameter("agencyId", agencyId)
+                    .getResultList();
             entityManager.getTransaction().commit();
-        }catch (Exception e){
+        } catch (Exception e) {
+            if (entityManager.getTransaction().isActive()) entityManager.getTransaction().rollback();
             System.out.println(e.getMessage());
-        }
-        finally {
+        } finally {
             entityManager.close();
         }
-
-        return Optional.ofNullable(owner);
+        return owners;
     }
 
     @Override
     public List<Owner> getAllOwners() {
-        List<Owner>owners = new ArrayList<>();
+        List<Owner> owners = new ArrayList<>();
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        try{
+        try {
             entityManager.getTransaction().begin();
-            owners = entityManager.createQuery("select o from Owner o",Owner.class).getResultList();
+            owners = entityManager.createQuery("select o from Owner o", Owner.class).getResultList();
             entityManager.getTransaction().commit();
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
-        }
-        finally {
+        } finally {
             entityManager.close();
         }
         return owners;
@@ -161,21 +159,20 @@ public class OwnerDaoImpl implements OwnerDao {    //1
     @Override
     public String updateOwner(Long ownerId, Owner newOwner) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        try{
+        try {
             entityManager.getTransaction().begin();
             entityManager.createQuery("update Owner o set o.firstName = :firstName, o.lastName = :lastName, o.email = :email, o.dateOfBirth = :dateOfBirth, o.gender = :gender where o.id = :ownerId")
-                            .setParameter("firstName",newOwner.getFirstName())
-                            .setParameter("lastName",newOwner.getLastName())
-                            .setParameter("email",newOwner.getEmail())
-                            .setParameter("dateOfBirth",newOwner.getDateOfBirth())
-                            .setParameter("gender",newOwner.getGender())
-                            .setParameter("ownerId",ownerId).executeUpdate();
+                    .setParameter("firstName", newOwner.getFirstName())
+                    .setParameter("lastName", newOwner.getLastName())
+                    .setParameter("email", newOwner.getEmail())
+                    .setParameter("dateOfBirth", newOwner.getDateOfBirth())
+                    .setParameter("gender", newOwner.getGender())
+                    .setParameter("ownerId", ownerId).executeUpdate();
             entityManager.getTransaction().commit();
             return "successfully updated";
-        }catch (Exception e){
+        } catch (Exception e) {
             return e.getMessage();
-        }
-        finally {
+        } finally {
             entityManager.close();
         }
     }

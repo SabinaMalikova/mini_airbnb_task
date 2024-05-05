@@ -13,10 +13,11 @@ import java.util.Optional;
 
 public class AgencyDaoImpl implements AgencyDao {
     private final EntityManagerFactory entityManagerFactory = HibernateConfig.getEntityManagerFactory();
+
     @Override
     public String saveAgency(Agency agency, Address address) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        try{
+        try {
             entityManager.getTransaction().begin();
             agency.setAddress(address);
             address.setAgency(agency);
@@ -24,9 +25,9 @@ public class AgencyDaoImpl implements AgencyDao {
             entityManager.persist(address);
             entityManager.getTransaction().commit();
             return "successfully saved";
-        }catch (Exception e){
+        } catch (Exception e) {
             return e.getMessage();
-        }finally {
+        } finally {
             entityManager.close();
         }
     }
@@ -34,15 +35,14 @@ public class AgencyDaoImpl implements AgencyDao {
     @Override
     public List<Agency> getAllAgency() {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        List<Agency>agencies = new ArrayList<>();
-        try{
+        List<Agency> agencies = new ArrayList<>();
+        try {
             entityManager.getTransaction().begin();
             agencies = entityManager.createQuery("select a from Agency a", Agency.class).getResultList();
             entityManager.getTransaction().commit();
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
-        }
-        finally {
+        } finally {
             entityManager.close();
         }
         return agencies;
@@ -52,14 +52,13 @@ public class AgencyDaoImpl implements AgencyDao {
     public Optional<Agency> getAgencyById(Long agencyId) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         Agency agency = null;
-        try{
+        try {
             entityManager.getTransaction().begin();
-            agency = entityManager.find(Agency.class,agencyId);
+            agency = entityManager.find(Agency.class, agencyId);
             entityManager.getTransaction().commit();
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
-        }
-        finally {
+        } finally {
             entityManager.close();
         }
         return Optional.ofNullable(agency);
@@ -68,18 +67,17 @@ public class AgencyDaoImpl implements AgencyDao {
     @Override
     public String updateAgency(Long oldAgencyId, Agency newAgency) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        try{
+        try {
             entityManager.getTransaction().begin();
             entityManager.createQuery("update Agency ag set ag.agency_name = :agency_name, ag.phone_number = :phone_number where ag.id = :oldAgencyId")
-                            .setParameter("agency_name",newAgency.getAgency_name())
-                            .setParameter("phone_number",newAgency.getPhone_number())
-                            .setParameter("oldAgencyId",oldAgencyId).executeUpdate();
+                    .setParameter("agency_name", newAgency.getAgency_name())
+                    .setParameter("phone_number", newAgency.getPhone_number())
+                    .setParameter("oldAgencyId", oldAgencyId).executeUpdate();
             entityManager.getTransaction().commit();
             return "successfully updated";
-        }catch (Exception e){
+        } catch (Exception e) {
             return e.getMessage();
-        }
-        finally {
+        } finally {
             entityManager.close();
         }
     }
@@ -87,16 +85,15 @@ public class AgencyDaoImpl implements AgencyDao {
     @Override
     public String deleteAgency(Long agencyId) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        try{
+        try {
             entityManager.getTransaction().begin();
             Agency agency = entityManager.find(Agency.class, agencyId);
             entityManager.remove(agency);
             entityManager.getTransaction().commit();
             return "successfully deleted";
-        }catch (Exception e){
+        } catch (Exception e) {
             return e.getMessage();
-        }
-        finally {
+        } finally {
             entityManager.close();
         }
     }

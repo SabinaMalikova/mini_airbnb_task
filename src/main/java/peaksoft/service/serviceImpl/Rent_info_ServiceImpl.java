@@ -13,7 +13,7 @@ public class Rent_info_ServiceImpl implements Rent_info_Service {
 
     @Override
     public List<RentInfo> getAllRentInfoBetweenDates(LocalDate checkOut1, LocalDate checkOut2) {
-        return rentInfoDao.getAllRentInfoBetweenDates(checkOut1,checkOut2);
+        return rentInfoDao.getAllRentInfoBetweenDates(checkOut1, checkOut2);
     }
 
     @Override

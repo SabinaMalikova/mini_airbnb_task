@@ -37,18 +37,17 @@ public class RentInfoDaoImpl implements RentInfoDao {
         try {
             entityManager.getTransaction().begin();
             countHouse = entityManager.createQuery("""
-                                             select count(r) from RentInfo r
-                                             where r.agency.id =:agencyId and r.checkIn <=:currentDate
-                                             and r.checkOut >=:currentDate
-                                             """, Long.class)
+                            select count(r) from RentInfo r
+                            where r.agency.id =:agencyId and r.checkIn <=:currentDate
+                            and r.checkOut >=:currentDate
+                            """, Long.class)
                     .setParameter("agencyId", agencyId)
                     .setParameter("currentDate", LocalDate.now())
                     .getSingleResult();
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());
-        }
-        finally {
+        } finally {
             entityManager.close();
         }
         return countHouse;

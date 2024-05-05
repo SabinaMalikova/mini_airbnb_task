@@ -25,7 +25,7 @@ public interface OwnerDao {
 
 
     //get owner by agency id
-    Optional<Owner> getOwnerByAgencyId(Long agencyId);
+    public List<Owner> getOwnersByAgencyId(Long agencyId);
 
 
     //get all owners with name, age

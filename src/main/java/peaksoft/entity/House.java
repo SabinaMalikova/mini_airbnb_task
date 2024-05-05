@@ -42,6 +42,16 @@ public class House {
         this.furniture = furniture;
     }
 
+    public House(HouseType houseType, BigDecimal price, double rating, String description, int room, boolean furniture, RentInfo rentInfo) {
+        this.houseType = houseType;
+        this.price = price;
+        this.rating = rating;
+        this.description = description;
+        this.room = room;
+        this.furniture = furniture;
+        this.rentInfo = rentInfo;
+    }
+
     public House(HouseType houseType, BigDecimal price, double rating, String description, int room, boolean furniture, Address address, RentInfo rentInfo) {
         this.houseType = houseType;
         this.price = price;
@@ -51,6 +61,8 @@ public class House {
         this.furniture = furniture;
         this.address = address;
         this.rentInfo = rentInfo;
+
+
     }
 
     @Override
